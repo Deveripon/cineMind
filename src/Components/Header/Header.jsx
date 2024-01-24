@@ -13,7 +13,7 @@ export default function Header() {
     }
 
     return (
-        <header>
+        <header className='h-[150px]'>
             <nav className='container flex items-center justify-between space-x-10 py-6'>
                 <Logo isDark={isDark} />
                 <ul className='flex items-center space-x-5'>

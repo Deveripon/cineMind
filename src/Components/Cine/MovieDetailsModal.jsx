@@ -5,8 +5,8 @@ export default function MovieDetailsModal({
     closeModal,
     movie,
     handleAddToCart,
-    isSelected,
-    setIsCartModalShow,
+    setIsCartShow,
+    isSelectedMovie,
 }) {
     const { isDark } = useContext(ThemeContext);
     return (
@@ -35,7 +35,7 @@ export default function MovieDetailsModal({
                             {movie.plot}
                         </p>
                         <div className='grid lg:grid-cols-2 gap-2'>
-                            {!isSelected ? (
+                            {!isSelectedMovie && (
                                 <button
                                     onClick={(e) => {
                                         handleAddToCart(e, movie);
@@ -47,12 +47,13 @@ export default function MovieDetailsModal({
                                     />
                                     <span>${movie.price} | Add to Cart</span>
                                 </button>
-                            ) : (
+                            )}
+                            {isSelectedMovie && (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         closeModal();
-                                        setIsCartModalShow(true);
+                                        setIsCartShow(true);
                                     }}
                                     className='bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm'>
                                     <img

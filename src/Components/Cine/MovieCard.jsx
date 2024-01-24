@@ -30,7 +30,7 @@ export default function MovieCard({ movie }) {
         e.stopPropagation();
         dispatch({ type: "ADD_TO_CART", payload: movie });
         toast.success(movie.title + " added to cart", {
-            position: "top-center",
+            position: "bottom-right",
         });
     }
 
@@ -48,13 +48,16 @@ export default function MovieCard({ movie }) {
                     closeModal={closeModal}
                     movie={movie}
                     handleAddToCart={handleAddToCart}
-                    setIsCartModalShow={setIsCartShow}
+                    setIsCartShow={setIsCartShow}
+                    isSelectedMovie={isSelectedMovie}
                 />
             )}
             <div onClick={handleMovieDetailsModal}>
                 <figure
                     className={` p-4 border shadow-sm rounded-xl ${
-                        isDark ? "border-white/10 " : "border-black/10 "
+                        isDark === "dark"
+                            ? "border-white/10 "
+                            : "border-black/10 "
                     }`}>
                     <img
                         className='w-full object-cover'

@@ -7,6 +7,7 @@ import Logo from "./Logo";
 
 export default function Header() {
     const { isDark, setIsDark } = useContext(ThemeContext);
+
     function handleTheme() {
         setIsDark(!isDark);
     }

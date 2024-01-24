@@ -3,7 +3,6 @@ export const ThemeContext = createContext(true);
 
 export default function ThemeContextProvider({ children }) {
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-
     if (
         localStorage.theme === "dark" ||
         (!("theme" in localStorage) &&

@@ -13,7 +13,10 @@ export default function Header() {
     }
 
     return (
-        <header className='h-[150px]'>
+        <header
+            className={`${
+                isDark ? "bg-dark" : "bg-white"
+            } h-[120px] sticky top-0 `}>
             <nav className='container flex items-center justify-between space-x-10 py-6'>
                 <Logo isDark={isDark} />
                 <ul className='flex items-center space-x-5'>

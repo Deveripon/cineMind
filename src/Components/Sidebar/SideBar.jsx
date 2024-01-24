@@ -5,7 +5,7 @@ import trending from "../../assets/icons/trending.svg";
 import watchLater from "../../assets/icons/watchLater.svg";
 export default function Sidebar() {
     return (
-        <aside>
+        <aside className=''>
             <ul className='space-y-2'>
                 <li>
                     <a

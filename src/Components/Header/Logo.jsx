@@ -1,9 +1,10 @@
+import lightLogo from "../../assets/CineMInd.png";
 import logo from "../../assets/CineMindDark.png";
-export default function Logo() {
+export default function Logo({ isDark }) {
     return (
         <a href='index.html'>
             <img
-                src={logo}
+                src={isDark ? lightLogo : logo}
                 width={139}
                 height={26}
                 alt=''

@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .darkTheme {
+        @apply bg-dark text-gray-200;
+    }
+}
+

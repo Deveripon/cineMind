@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import { CartModalContext } from "../../context/CartModalContext";
+import { MovieCartContext } from "../../context/MovieCartContext";
+import { ThemeContext } from "../../context/ThemeContext";
 import MovieDetailsModal from "./MovieDetailsModal";
 import Ratings from "./Ratings";
 
@@ -17,16 +21,41 @@ export default function MovieCard({ movie }) {
         setMovieDetailsModal(true);
     }
 
+    //manage movie selections
+    const { selectedMovies, dispatch } = useContext(MovieCartContext);
+    const { setIsCartShow } = useContext(CartModalContext);
+
+    //handle movie selections
+    function handleAddToCart(e, movie) {
+        e.stopPropagation();
+        dispatch({ type: "ADD_TO_CART", payload: movie });
+        toast.success(movie.title + " added to cart", {
+            position: "top-center",
+        });
+    }
+
+    //handle add to to cart button
+    const isSelectedMovie = selectedMovies.cartData.find(
+        (item) => item.id === movie.id
+    );
+
+    //controlling theme by context
+    const { isDark } = useContext(ThemeContext);
     return (
         <>
             {movieDetailsModal && (
                 <MovieDetailsModal
                     closeModal={closeModal}
                     movie={movie}
+                    handleAddToCart={handleAddToCart}
+                    setIsCartModalShow={setIsCartShow}
                 />
             )}
             <div onClick={handleMovieDetailsModal}>
-                <figure className='p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl'>
+                <figure
+                    className={` p-4 border shadow-sm rounded-xl ${
+                        isDark ? "border-white/10 " : "border-black/10 "
+                    }`}>
                     <img
                         className='w-full object-cover'
                         src={movie.posterUrl}
@@ -38,15 +67,34 @@ export default function MovieCard({ movie }) {
                             {movie.genres.join("/")}
                         </p>
                         <Ratings rating={movie.rating} />
-                        <a
-                            className='bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm'
-                            href='#'>
-                            <img
-                                src='./assets/tag.svg'
-                                alt=''
-                            />
-                            <span>${movie.price} | Add to Cart</span>
-                        </a>
+
+                        {!isSelectedMovie && (
+                            <button
+                                onClick={(e) => {
+                                    handleAddToCart(e, movie);
+                                }}
+                                className='bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm'>
+                                <img
+                                    src='./assets/tag.svg'
+                                    alt=''
+                                />
+                                <span>${movie.price} | Add to Cart</span>
+                            </button>
+                        )}
+                        {isSelectedMovie && (
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsCartShow(true);
+                                }}
+                                className='bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm'>
+                                <img
+                                    src='./assets/tag.svg'
+                                    alt=''
+                                />
+                                <span>Go to Cart</span>
+                            </button>
+                        )}
                     </figcaption>
                 </figure>
             </div>
